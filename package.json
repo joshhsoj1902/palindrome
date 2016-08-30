@@ -24,7 +24,8 @@
     "bower": "^1.7.2",
     "cookie-parser": "^1.4.1",
     "errorhandler": "^1.4.2",
-    "express": "~4.7.2"
+    "express": "~4.7.2",
+    "mongoose": "4.5.10"
   },
   "devDependencies": {
     "chai": "^3.5.0",
