@@ -7,11 +7,15 @@ var bodyParser = require('body-parser');
 //app.use(router);
 //app.use('/api', bodyParser.json());
 
+app.use(express.static("public"));
+
  app.use('/api',bodyParser.text()); 									// Allows bodyParser to look at raw text
  app.use('/api',bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
  app.use('/api',bodyParser.json());                                     // parse application/json
  app.use('/api',bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use('/api', router);
+
+ 
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/palindrome');
@@ -19,37 +23,58 @@ mongoose.connect('mongodb://localhost/palindrome');
 var Message = require('./models/message');
 
 // Get single message
-router.get('/api/message/:messageId', function (req, res) {
+router.get('/message/:messageId', function (req, res) {
     console.log("Get single message");
     
     Message.findById(req.params.messageId, function(err, message) {
-        if (err) throw err;
+        if (err) {
+                res.send(err);
+                throw err;
+            };
 
         console.log(message);
-        res.send(message);
+        // res.send(message);
+        res.json(message);
     });
 });
  // Get all message
-router.get('/api/message', function (req, res) {
+router.get('/message', function (req, res) {
     console.log("Get all messages");
-    Message.find({}, function (err, messages) {
-        if (err) throw err;
-        console.log(messages);
-        res.send(messages);
-    });
+    returnAllMessages(res);
+    // Message.find({}, function (err, messages) {
+    //     if (err) throw err;
+    //     res.json(messages);
+    // });
 });
-router.put('/api/message/:messageId', function (req, res) {
+
+function returnAllMessages(res){
+    Message.find({}, function (err, messages) {
+        if (err) {
+                res.send(err);
+                throw err;
+            };
+        res.json(messages);
+    });
+}
+
+router.put('/message/:messageId', function (req, res) {
     console.log("put single message");
 
     Message.findById(req.params.messageId, function(err, message) {
-        if (err) throw err;
+        if (err) {
+                res.send(err);
+                throw err;
+            };
 
         message.body = req.body.body;
 
          message.save(function(err) {
-            if (err) throw err;
-
+            if (err) {
+                res.send(err);
+                throw err;
+            };
             console.log('Message successfully updated!');
+            returnAllMessages(res);
         });
 
     });
@@ -63,9 +88,13 @@ router.put('/message', function (req, res) {
     });
 
     message.save(function (err) {
-        if (err) throw err;
+        if (err) {
+                res.send(err);
+                throw err;
+            };
 
         console.log('Message saved successfully!');
+        returnAllMessages(res);
     });
 
     // update message 
@@ -73,15 +102,24 @@ router.put('/message', function (req, res) {
 router.delete('/message/:messageId', function (req, res) {
     console.log("delete single message");
     Message.findByIdAndRemove(req.params.messageId, function(err) {
-        if (err) throw err;
+        if (err) {
+                res.send(err);
+                throw err;
+            };
 
         console.log('Message deleted!');
+        returnAllMessages(res);
     });
 });
 
-router.get('/', function (req, res) {
-    res.send('Hello World!');
-});
+// router.get('/', function (req, res) {
+//     res.send('Hello World!');
+// });
+
+app.get("*", function(req,res) {
+    //load the single view file and angular witll handle the page changes on the front-end.
+    res.sendfile('./public/index.html');
+  });
 
 app.listen(3000, function () {
     console.log('App is listening on port 3000!');

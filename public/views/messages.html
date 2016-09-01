@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body {
+            padding-top: 80px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" data-ng-init="messageManager()">
+
+        <div class="page-header text-center">
+            <h1><span class="fa fa-anchor"></span>Message List</h1>
+            <!--<button id="btn-logout" class="btn btn-default btn-sm" ng-click="logout">Logout</button>-->
+            <!--<a href="/logout" class="btn btn-default btn-sm">Logout</a>-->
+        </div>
+
+        <div>
+
+            <!-- Feed LIST -->
+            <div id="message-list" class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <table class="table">
+                        <tr>
+                            <th>Message</th>
+                            <th>Palindrome</th>
+                        </tr>
+                        <tbody ng-repeat="message in messages | orderBy : 'created_at'">
+                            <tr class="main-row" ng-click="toggleFeedDetail($index)">
+                                <td><!--{{ message.body }}-->
+                                    <div id="editor" ng-model="message.body" ng-attr-contenteditable="{{ editmode }}">
+                                    </div>
+                                </td>
+                                <td>{{ message.isPalindrome }}</td>
+                                <td>
+                                    <p>
+                                        <button type="button" class="btn btn-danger" ng-click="deleteMessage(message)">Delete</button>
+                                        <!--<button id="editorBtn" type="button" ng-click="toggleEditMode()">{{editmode ? 'Disable Editing' : 'Enable Editing'}}</button>-->
+                                        <button class="btn btn-success" ng-show="editmode" ng-click="updateMessage(message);toggleEditMode()" type="submit">Save</button>
+                                        <button type="button" class="btn btn-primary" ng-hide="editmode" ng-click="toggleEditMode()">Modify</button>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr class="extra-row" ng-show="activePosition == $index">
+                                <td colspan="8">
+
+                                    <!--TEST Mode-->
+                                    <section>
+                                        <label>Feed Title:</label>
+                                        <div id="editor" ng-model="feed.title" ng-attr-contenteditable="{{ editmode }}">
+                                        </div>
+
+                                        <label>Feed Key:</label>
+                                        <div id="editor" ng-model="feed.feedKey" ng-attr-contenteditable="{{ editmode }}">
+                                        </div>
+                                        <!--
+                                        <p>Feed Title: {{ feed.title }}</p>
+                                        <p>FeedKey: {{ feed.feedKey }}</p>-->
+                                        <div>
+                                            <uib-tabset active="active">
+                                                <uib-tab index="$index + 1" ng-repeat="reddit in feed.RedditFeeds" heading="{{reddit.subreddit}}">
+                                                    <!--<p>subreddit: {{reddit.subreddit}}</p>-->
+                                                    <label>subreddit:</label>
+                                                    <div id="editor" ng-model="reddit.subreddit" ng-attr-contenteditable="{{ editmode }}">
+                                                    </div>
+                                                </uib-tab>
+                                                <uib-tab-button handler="addTab()" ng-show="editmode" heading="+"/>
+                                                    <!--<label ng-show="editmode">Static content</label>-->
+                                                    
+                                                <!--</uib-tab>-->
+                                            </uib-tabset>
+                                        </div>
+                                        <p>
+                                            <button type="button" class="btn btn-danger" ng-click="deleteFeed(feed.id)">Delete</button>
+                                            <!--<button id="editorBtn" type="button" ng-click="toggleEditMode()">{{editmode ? 'Disable Editing' : 'Enable Editing'}}</button>-->
+                                            <button class="btn btn-success" ng-show="editmode" ng-click="updateFeed(feed);toggleEditMode()" type="submit">Save</button>
+                                            <button type="button" class="btn btn-primary" ng-hide="editmode" ng-click="toggleEditMode()">Modify</button>
+                                        </p>
+
+                                    </section>
+
+
+
+
+
+
+
+
+                                    <!--Display Mode-->
+                                    <!--<span ng-hide="editing">
+                                        <p>Feed Title: {{ feed.title }}</p>
+                                        <p>FeedKey: {{ feed.feedKey }}</p>
+                                        <div>
+                                            <uib-tabset active="active" >
+                                                <uib-tab index="$index + 1" ng-repeat="reddit in feed.RedditFeeds" heading="{{reddit.subreddit}}">
+                                                    <p>subreddit: {{reddit.subreddit}}</p>
+                                                </uib-tab>
+                                            </uib-tabset>
+                                        </div>
+                                        <p>
+                                            <button type="button" class="btn btn-danger" ng-click="deleteFeed(feed.id)">Delete</button>
+                                            <button type="button" class="btn btn-primary" ng-click="editing = true">Modify</button>
+                                        </p>
+                                    </span>-->
+
+                                    <!--Edit Mode-->
+                                    <!--<form ng-show="editing" ng-submit="updateFeed(feed);editing = false">
+                                        <label>Feed Title:</label>
+                                        <input type="text" ng-model="feed.title" placeholder="Name" ng-required/>
+                                        <br/>
+                                        <label>FeedKey:</label>
+                                        <input type="text" ng-model="feed.feedKey" placeholder="Date" ng-required/>
+                                        <br/>
+
+                                        <button type="button" class="btn btn-default btn-sm" ng-click="activeTab = 1">Select first tab</button>
+                                        <button type="button" class="btn btn-default btn-sm" ng-click="activeTab = 2">Select second tab</button>
+
+                                        <div>
+                                            <uib-tabset active="activeTab">
+                                                <uib-tab index="$index + 1" ng-repeat="reddit in feed.RedditFeeds" heading="{{reddit.subreddit}}">
+                                                    <label>SubReddit:</label>
+                                                    <input type="text" ng-model="reddit.subreddit" placeholder="subreddit" ng-required/>
+                                                </uib-tab>
+                                                <uib-tab index="$index + 1" heading="Add Feed">
+                                                    Static content
+                                                </uib-tab>
+                                            </uib-tabset>
+                                        </div>
+                                        <button class="btn btn-success" type="submit">Save</button>
+                                    </form>-->
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr>
+                            <td colspan="8">
+                                <!-- FORM TO CREATE NEW FEEDS -->
+                                <div id="feed-form" class="row">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <form>
+                                            <div class="form-group">
+
+                                                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                                                <div class="form-group">
+                                                    <label for="feedTitle">Message: </label>
+                                                    <input type="text" id="messageBody" class="form-control" ng-model="formData.body">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createMessage()">Add</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+</body>
+
+</html>
