@@ -38,6 +38,7 @@
     "node": ">=0.6"
   },
   "scripts": {
+    "postinstall": "bower install",
     "test": "mocha test"
   }
 }

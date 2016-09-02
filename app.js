@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
-var router = express.Router();
-var mongoose = require('mongoose');
+//var router = express.Router();
 var bodyParser = require('body-parser');
 
 //app.use(router);
@@ -9,108 +8,16 @@ var bodyParser = require('body-parser');
 
 app.use(express.static("public"));
 
- app.use('/api',bodyParser.text()); 									// Allows bodyParser to look at raw text
- app.use('/api',bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
- app.use('/api',bodyParser.json());                                     // parse application/json
- app.use('/api',bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
-app.use('/api', router);
+app.use('/api',bodyParser.text()); 									// Allows bodyParser to look at raw text
+app.use('/api',bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
+app.use('/api',bodyParser.json());                                     // parse application/json
+app.use('/api',bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+
+app.use('/api/', require('./components/message/routes.js'))
+//app.use('/api', router);
 
  
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/palindrome');
-
-var Message = require('./models/message');
-
-// Get single message
-router.get('/message/:messageId', function (req, res) {
-    console.log("Get single message");
-    
-    Message.findById(req.params.messageId, function(err, message) {
-        if (err) {
-                res.send(err);
-                throw err;
-            };
-
-        console.log(message);
-        // res.send(message);
-        res.json(message);
-    });
-});
- // Get all message
-router.get('/message', function (req, res) {
-    console.log("Get all messages");
-    returnAllMessages(res);
-    // Message.find({}, function (err, messages) {
-    //     if (err) throw err;
-    //     res.json(messages);
-    // });
-});
-
-function returnAllMessages(res){
-    Message.find({}, function (err, messages) {
-        if (err) {
-                res.send(err);
-                throw err;
-            };
-        res.json(messages);
-    });
-}
-
-router.put('/message/:messageId', function (req, res) {
-    console.log("put single message");
-
-    Message.findById(req.params.messageId, function(err, message) {
-        if (err) {
-                res.send(err);
-                throw err;
-            };
-
-        message.body = req.body.body;
-
-         message.save(function(err) {
-            if (err) {
-                res.send(err);
-                throw err;
-            };
-            console.log('Message successfully updated!');
-            returnAllMessages(res);
-        });
-
-    });
-    
-});
-router.put('/message', function (req, res) {
-    console.log("add new message");
-
-    var message = new Message({
-        body: req.body.body
-    });
-
-    message.save(function (err) {
-        if (err) {
-                res.send(err);
-                throw err;
-            };
-
-        console.log('Message saved successfully!');
-        returnAllMessages(res);
-    });
-
-    // update message 
-});
-router.delete('/message/:messageId', function (req, res) {
-    console.log("delete single message");
-    Message.findByIdAndRemove(req.params.messageId, function(err) {
-        if (err) {
-                res.send(err);
-                throw err;
-            };
-
-        console.log('Message deleted!');
-        returnAllMessages(res);
-    });
-});
 
 // router.get('/', function (req, res) {
 //     res.send('Hello World!');
@@ -124,3 +31,37 @@ app.get("*", function(req,res) {
 app.listen(3000, function () {
     console.log('App is listening on port 3000!');
 });
+
+
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: err
+    });
+  });
+
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
+// app.use(function(err, req, res, next) {
+//   if (res.headersSent) {
+//     return next(err);
+//   }
+//   res.status(500);
+//   res.render('error', { error: err });
+// });
