@@ -2,11 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var Message = require('../../models/message');
+//var Message = require('../../models/message');
 var Messages = require('./messages.js');
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/palindrome');
 
 // Get single message
 router.get('/message/:messageId', function (req, res, next) {

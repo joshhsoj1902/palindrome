@@ -2,9 +2,24 @@ var express = require('express');
 var app = express();
 //var router = express.Router();
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
 
 //app.use(router);
 //app.use('/api', bodyParser.json());
+
+// *** config file *** //
+var config = require('./config');
+
+// *** mongoose *** ///
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+  if(err) {
+    console.log('Error connecting to the database. ' + err);
+  } else {
+    console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+  }
+});
 
 app.use(express.static("public"));
 
@@ -36,14 +51,18 @@ app.listen(3000, function () {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if (app.get('env') === 'development' ||app.get('env') === 'test') {
 
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
+    res.status(err.status || 500)
+    .send({
         message: err.message,
         error: err
     });
+    // res.send('error', {
+    //     message: err.message,
+    //     error: err
+    // });
   });
 
 }
@@ -52,10 +71,10 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+    //res.send('error', {
+    //    message: err.message,
+    //    error: {}
+    //});
 });
 
 // app.use(function(err, req, res, next) {
@@ -65,3 +84,6 @@ app.use(function(err, req, res, next) {
 //   res.status(500);
 //   res.render('error', { error: err });
 // });
+
+//Needed for mocha tests
+module.exports = app;
