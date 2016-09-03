@@ -17,6 +17,7 @@
     "test",
     "tests"
   ],
+  "directory" : "public/assets",
   "dependencies": {
     "bootstrap": "~3.3.5",
     "angular-bootstrap": "*",
