@@ -20,10 +20,6 @@ describe('Basic Server Access', function () {
         done();
       });
   });
-  //it('should list a SINGLE blob on /blob/<id> GET');
-  //it('should add a SINGLE blob on /blobs POST');
-  //it('should update a SINGLE blob on /blob/<id> PUT');
-  //it('should delete a SINGLE blob on /blob/<id> DELETE');
 });
 
 describe('Messages', function () {
@@ -31,8 +27,12 @@ describe('Messages', function () {
   Message.collection.drop();
 
   beforeEach(function (done) {
+    var currentDate = new Date();
     var newMessage = new Message({
-      body: 'Test Message'
+      body: 'Test Message',
+      created_at: currentDate,
+      updated_at: currentDate,
+      isPalindrome: false
     });
     newMessage.save(function (err) {
       done();
@@ -61,8 +61,12 @@ describe('Messages', function () {
   });
 
   it('should list a SINGLE Message on /api/message/<id> GET', function (done) {
+    var currentDate = new Date();
     var newMessage = new Message({
-      body: 'New Message'
+      body: 'New Message',
+      created_at: currentDate,
+      updated_at: currentDate,
+      isPalindrome: false
     });
     newMessage.save(function (err, data) {
       chai.request(server)
@@ -102,7 +106,7 @@ describe('Messages', function () {
         done();
       });
   });
-  it('should update a SINGLE message on /api/message/<id> PUT', function (next) {
+  it('should update a SINGLE message on /api/message/<id> PUT', function (done) {
     chai.request(server)
       .get('/api/message')
       .end(function (err, res) {

@@ -1,10 +1,22 @@
 
 function isStringPalindrome(string){
+
+    //White space is ignored
+    string = string.trim();
+
+    //Only letters are considered
+    string = string.replace(/[^a-zA-Z]+/g,'');
+    
+    //Doesn't matter what case the text is.
+    string = string.toLowerCase();
+
     var isPalindrome = true;
+
+    if (string.length == 0) {
+        var isPalindrome = false;
+    }
     for (i = 0; i < string.length; i++) {
         var j = (string.length-1)-i
-        console.log("string: ",string.length," i: ",i," j: ",j);
-        console.log(string[i]," ",string[j]);
         
         //Handle middle character
         if (i == j){
@@ -23,6 +35,7 @@ function isStringPalindrome(string){
         // document.write(word[i],"</br>"); // this will show each letter of the word on a new line
         
     } 
+    //console.log("Conclusion: [",string,"] is ",isPalindrome,"(length: ",string.length,")")
     return isPalindrome
 }
 

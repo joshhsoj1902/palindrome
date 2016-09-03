@@ -1,9 +1,5 @@
-var mongoose = require('mongoose');
-
 var Message = require('../../models/message');
-
-//mongoose.Promise = global.Promise;
-//mongoose.connect('mongodb://localhost/palindrome');
+var palindrome = require('../palindrome/index.js');
 
 function getAllMessages(callback) {
     Message.find({}).exec(callback);
@@ -14,37 +10,30 @@ function getMessage(messageId, callback) {
 };
 
 function updateMessageBody(messageId, messageBody, callback) {
-    Message.findByIdAndUpdate(messageId, { $set: { body: messageBody } }).exec(callback);
+    var currentDate = new Date();
+    Message.findByIdAndUpdate(messageId, 
+        { $set: 
+            { 
+                body: messageBody,
+                updated_at: currentDate,
+                isPalindrome:palindrome.isStringPalindrome(messageBody)
+            } 
+        }).exec(callback);
 }
 
 function createMessage(messageBody,callback){
+    var currentDate = new Date();
     var message = new Message({
-        body: messageBody
+        body: messageBody,
+        created_at: currentDate,
+        updated_at: currentDate,
+        isPalindrome:palindrome.isStringPalindrome(messageBody)
     });
-
-    message.save().exec(callback);
-    //     function (err) {
-    //     if (err) {
-    //         res.send(err);
-    //         throw err;
-    //     };
-
-    //     console.log('Message saved successfully!');
-    //     returnAllMessages(res);
-    // });
+    message.save(callback);
 }
 
 function deleteMessage(messageId,callback){
     Message.findByIdAndRemove(messageId).exec(callback);
-    //     , function (err) {
-    //     if (err) {
-    //         res.send(err);
-    //         throw err;
-    //     };
-
-    //     console.log('Message deleted!');
-    //     returnAllMessages(res);
-    // });
 };
 
 exports.getAllMessages = getAllMessages;
