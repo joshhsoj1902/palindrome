@@ -3,10 +3,10 @@ var message = angular.module('message', ['ngRoute', 'messageUI']);
 message.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider.
-    when('/home', {
-      templateUrl: 'views/home.html'
-      //controller: 'authCtrl'
-    }).
+    // when('/home', {
+    //   templateUrl: 'views/messages.html'
+    //   //controller: 'authCtrl'
+    // }).
     // when('/login', {
     //    templateUrl: '/views/login.html',
     //    controller: 'authCont'
@@ -28,7 +28,7 @@ message.config(['$routeProvider', '$locationProvider',
     //   controller: 'feedCtrl'
     // })
     .otherwise({
-        redirectTo: '/home'
+        redirectTo: '/messages'
       });
     // use the HTML5 History API and remove # from URLs
     $locationProvider.html5Mode({enabled: true, requireBase: false});
