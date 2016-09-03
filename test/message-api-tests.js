@@ -43,6 +43,9 @@ describe('Messages', function () {
     done();
   });
 
+  //////////////////
+  //Getting messages
+  ////////////////// 
   it('should list ALL Messages on /api/message GET', function (done) {
     chai.request(server)
       .get('/api/message')
@@ -86,6 +89,28 @@ describe('Messages', function () {
         });
     });
   });
+
+  it('should return a 404 when a requested message does not exist on /api/message/<id> GET', function (done) {
+    Message.collection.drop();
+    chai.request(server)
+      .get('/api/message/57ca0324f2a40be819023a39')
+      .end(function (err, res) {
+        //expect(err).to.be.a('null');
+        res.should.have.property('status', 404);
+        // res.should.be.json;
+        // expect(res.body).to.be.a('array')
+        // res.body[0].should.have.property('_id');
+        // res.body[0].should.have.property('body');
+        // res.body[0].should.have.property('isPalindrome');
+        // res.body[0].body.should.equal('Test Message');
+        // res.body[0].isPalindrome.should.equal(false);
+        done();
+      });
+  });
+
+  ///////////////////
+  //Creating messages
+  ///////////////////
   it('should add a SINGLE message on /api/message PUT', function (done) {
     chai.request(server)
       .put('/api/message')
@@ -106,6 +131,51 @@ describe('Messages', function () {
         done();
       });
   });
+
+    it('should return 400 error when no body is provided on /api/message PUT', function (done) {
+    chai.request(server)
+      .put('/api/message')
+      .end(function (err, res) {
+        //expect(err).to.be.a('null');
+        res.should.have.property('status', 400);
+        //res.should.be.json;
+
+        // expect(res.body).to.be.a('array');
+        // newMessage = res.body.find(x => x.body === 'Put Message');
+        // expect(newMessage).to.be.a('object');
+        // newMessage.should.have.property('body');
+        // newMessage.should.have.property('_id');
+        // newMessage.should.have.property('isPalindrome');
+        // newMessage.body.should.equal('Put Message');
+        // newMessage.isPalindrome.should.equal(false);
+        done();
+      });
+  });
+
+      it('should return 400 error when an empty body is provided on /api/message PUT', function (done) {
+    chai.request(server)
+      .put('/api/message')
+      .send({ 'body': '' })
+      .end(function (err, res) {
+        //expect(err).to.be.a('null');
+        res.should.have.property('status', 400);
+        //res.should.be.json;
+
+        // expect(res.body).to.be.a('array');
+        // newMessage = res.body.find(x => x.body === 'Put Message');
+        // expect(newMessage).to.be.a('object');
+        // newMessage.should.have.property('body');
+        // newMessage.should.have.property('_id');
+        // newMessage.should.have.property('isPalindrome');
+        // newMessage.body.should.equal('Put Message');
+        // newMessage.isPalindrome.should.equal(false);
+        done();
+      });
+  });
+
+  ///////////////////
+  //Updating messages
+  ///////////////////
   it('should update a SINGLE message on /api/message/<id> PUT', function (done) {
     chai.request(server)
       .get('/api/message')
@@ -128,6 +198,10 @@ describe('Messages', function () {
           });
       });
   });
+
+  ///////////////////
+  //Deleting messages
+  ///////////////////
   it('should delete a SINGLE message on /api/message/<id> DELETE', function (done) {
     chai.request(server)
       .get('/api/message')
