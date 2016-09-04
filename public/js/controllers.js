@@ -222,12 +222,12 @@ messageUI.controller('messageCtrl', function($scope,$http){
     $scope.editmode = false;
     $scope.toggleEditMode = function(){
         $scope.editmode = $scope.editmode === false ? true: false;
-    }
+    };
 
     $scope.getMessages();
 });
 
-feedUI.controller('feedCtrl', function ($scope, $http, $location, UserService) {
+feedUI.controller('feedCtrl', function ($scope, $http) {
     $scope.formData = {};
 
     // when landing on the page, get all feeds and show them
@@ -272,7 +272,7 @@ feedUI.controller('feedCtrl', function ($scope, $http, $location, UserService) {
   $scope.editmode = false;
   $scope.toggleEditMode = function(){
     $scope.editmode = $scope.editmode === false ? true: false;
-  }
+  };
 
     // delete a feed
     $scope.deleteFeed = function(id) {
@@ -289,7 +289,7 @@ feedUI.controller('feedCtrl', function ($scope, $http, $location, UserService) {
     
     $scope.toggleFeedDetail = function($index) {
         //$scope.isVisible = $scope.isVisible == 0 ? true : false;
-        $scope.activePosition = $scope.activePosition == $index ? -1 : $index;
+        $scope.activePosition = $scope.activePosition === $index ? -1 : $index;
         console.log("index: ",$index);
         console.log("Active Postion: ",$scope.activePosition);
     };
@@ -301,7 +301,7 @@ feedUI.controller('feedCtrl', function ($scope, $http, $location, UserService) {
             subreddit: 'New '
         };
         
-        $scope.feeds[$scope.activePosition].RedditFeeds.push(newTab)
+        $scope.feeds[$scope.activePosition].RedditFeeds.push(newTab);
         // $scope.tabs.push(newTab);
         // $timeout(function(){
         //     $scope.activeTabIndex = ($scope.tabs.length -1)

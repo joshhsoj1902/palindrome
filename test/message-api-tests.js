@@ -1,11 +1,13 @@
+/*jshint expr: true*/
+//'use strict';
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../app');
-//var should = require('should');
-var should = chai.should;
+//var should = chai.should;
 var expect = chai.expect;
 
-var Message = require('../models/message')
+var Message = require('../models/message');
 
 chai.use(chaiHttp);
 
@@ -22,7 +24,7 @@ describe('Basic Server Access', function () {
   });
 });
 
-describe('Messages', function () {
+describe('Messages API', function () {
 
   Message.collection.drop();
 
@@ -35,6 +37,10 @@ describe('Messages', function () {
       isPalindrome: false
     });
     newMessage.save(function (err) {
+      if (err){
+        //Todo: Something better could be done here, but future tests will fail anyway...
+        console.log("Saving message failed: ",err);
+      }
       done();
     });
   });
@@ -53,7 +59,7 @@ describe('Messages', function () {
         expect(err).to.be.a('null');
         res.should.have.property('status', 200);
         res.should.be.json;
-        expect(res.body).to.be.a('array')
+        expect(res.body).to.be.a('array');
         res.body[0].should.have.property('_id');
         res.body[0].should.have.property('body');
         res.body[0].should.have.property('isPalindrome');
@@ -78,7 +84,7 @@ describe('Messages', function () {
           expect(err).to.be.a('null');
           res.should.have.property('status', 200);
           res.should.be.json;
-          expect(res.body).to.be.a('object')
+          expect(res.body).to.be.a('object');
           res.body.should.have.property('_id');
           res.body.should.have.property('body');
           res.body.should.have.property('isPalindrome');
@@ -121,7 +127,7 @@ describe('Messages', function () {
         res.should.be.json;
 
         expect(res.body).to.be.a('array');
-        newMessage = res.body.find(x => x.body === 'Put Message');
+        var newMessage = res.body.find(x => x.body === 'Put Message');
         expect(newMessage).to.be.a('object');
         newMessage.should.have.property('body');
         newMessage.should.have.property('_id');
@@ -187,7 +193,7 @@ describe('Messages', function () {
             response.should.have.property('status', 200);
             response.should.be.json;
             expect(response.body).to.be.a('array');
-            updatedMessage = response.body.find(x => x._id === res.body[0]._id);
+            var updatedMessage = response.body.find(x => x._id === res.body[0]._id);
             expect(updatedMessage).to.be.a('object');
             updatedMessage.should.have.property('body');
             updatedMessage.should.have.property('_id');

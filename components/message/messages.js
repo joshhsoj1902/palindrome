@@ -3,11 +3,11 @@ var palindrome = require('../palindrome/index.js');
 
 function getAllMessages(callback) {
     Message.find({}).exec(callback);
-};
+}
 
 function getMessage(messageId, callback) {
     Message.findById(messageId).exec(callback);
-};
+}
 
 function updateMessageBody(messageId, messageBody, callback) {
     var currentDate = new Date();
@@ -34,7 +34,7 @@ function createMessage(messageBody,callback){
 
 function deleteMessage(messageId,callback){
     Message.findByIdAndRemove(messageId).exec(callback);
-};
+}
 
 exports.getAllMessages = getAllMessages;
 exports.getMessage = getMessage;

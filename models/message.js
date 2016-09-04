@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var palindrome = require('../components/palindrome/index.js');
 
 var messageSchema = new Schema({
     // Mongo has a built in ID, consider hashing it before exposing it:
