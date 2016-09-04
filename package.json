@@ -30,8 +30,9 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.0",
-    "mocha": "*",
-    "should": ">= 8.3.1"
+    "mocha": "latest",
+    "should": ">= 8.3.1",
+    "jshint": "latest"
   },
   "license": "MIT",
   "engines": {
@@ -39,6 +40,8 @@
   },
   "scripts": {
     "postinstall": "bower install --allow-root",
-    "test": "mocha test"
+    "pretest": "npm run lint",
+    "test": "mocha test",
+    "lint": "jshint ."
   }
 }
