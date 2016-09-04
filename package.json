@@ -38,7 +38,7 @@
     "node": ">=0.6"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install --allow-root",
     "test": "mocha test"
   }
 }
