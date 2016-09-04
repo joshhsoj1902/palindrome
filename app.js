@@ -1,20 +1,15 @@
 var express = require('express');
 var app = express();
-//var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
-
-//app.use(router);
-//app.use('/api', bodyParser.json());
 
 // *** config file *** //
 var config = require('./config');
 
 // *** mongoose *** ///
 mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
-//mongoose.connect(config.mongoURI[app.settings.env], function (err) {
+mongoose.connect(config.mongoURI[app.settings.env], function (err, res) {
+  //mongoose.connect(config.mongoURI[app.settings.env], function (err) {
   if (err) {
     console.log('Error connecting to the database. ' + err);
     console.log(res);
@@ -31,14 +26,6 @@ app.use('/api', bodyParser.json());                                     // parse
 app.use('/api', bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 
 app.use('/api/', require('./components/message/routes.js'));
-//app.use('/api', router);
-
-
-
-
-// router.get('/', function (req, res) {
-//     res.send('Hello World!');
-// });
 
 app.get("*", function (req, res) {
   //load the single view file and angular witll handle the page changes on the front-end.
@@ -54,7 +41,7 @@ app.listen(3000, function () {
 // development error handler
 // will print stacktrace
 //if (app.get('env') === 'development' || app.get('env') === 'test') {
-  if (app.get('env') === 'development') {
+if (app.get('env') === 'development') {
 
   app.use(function (err, req, res, next) {
     //app.use(function(err, req, res) {
@@ -63,13 +50,10 @@ app.listen(3000, function () {
         message: err.message,
         error: err
       });
-    if (true === false){
-    console.log(next);
+    //TODO: this is very much a hack to make jshint happy, Is there a case in here that I would want to call next()?
+    if (true === false) {
+      console.log(next);
     }
-    // res.send('error', {
-    //     message: err.message,
-    //     error: err
-    // });
   });
 
 }
@@ -79,22 +63,11 @@ app.listen(3000, function () {
 app.use(function (err, req, res, next) {
   //app.use(function(err, req, res) {
   res.status(err.status || 500);
-  if (true === false){
-  console.log(next);
+  //TODO: this is very much a hack to make jshint happy, Is there a case in here that I would want to call next()?
+  if (true === false) {
+    console.log(next);
   }
-  //res.send('error', {
-  //    message: err.message,
-  //    error: {}
-  //});
 });
-
-// app.use(function(err, req, res, next) {
-//   if (res.headersSent) {
-//     return next(err);
-//   }
-//   res.status(500);
-//   res.render('error', { error: err });
-// });
 
 //Needed for mocha tests
 module.exports = app;

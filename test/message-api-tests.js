@@ -4,7 +4,6 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../app');
-//var should = chai.should;
 var expect = chai.expect;
 
 var Message = require('../models/message');
