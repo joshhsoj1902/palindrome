@@ -40,9 +40,10 @@
     "node": ">=0.6"
   },
   "scripts": {
-    "postinstall": "bower install --allow-root",
+    "postinstall": "npm run bower && npm run apidoc",
     "pretest": "npm run lint",
     "test": "mocha test",
+    "bower": "bower install --allow-root",
     "lint": "jshint .",
     "apidoc": "apidoc -e \"(node_modules|public)\" -o public/apidoc"
   }
