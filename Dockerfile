@@ -13,7 +13,7 @@ COPY . /usr/src/app
 
 # Install app dependencies
 #COPY package.json /usr/src/app/
-RUN npm install
+RUN npm install --unsafe-perm
 
 # Bundle app source
 #COPY . /usr/src/app
