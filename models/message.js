@@ -9,7 +9,7 @@ var messageSchema = new Schema({
   isPalindrome: { type: Boolean,required:true},
   created_at: Date,
   updated_at: Date
-});
+}, { versionKey: false });
 
 // on every save, add the Date and check if it's a Palindrome
 // messageSchema.pre('save', function(next) {
