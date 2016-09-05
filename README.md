@@ -65,4 +65,13 @@ The test suite can be ran using the command:
 npm run test
 ```
 ###Sequence Diagrams
-TBD
+#### GET Messages
+![Get Messages Sequence image](./.readme/images/Get-All-Messages.png)
+#### GET Message
+![Get Message Sequence image](./.readme/images/Get-A-Message.png)
+#### PUT (Create) Message
+![Put Message Sequence image](./.readme/images/Put-Create-Message.png)
+#### PUT (Update) Message
+![Put Message Sequence image](./.readme/images/Put-Update-Message.png)
+#### DELETE Message
+![Delete Message Sequence image](./.readme/images/Delete-Delete-Message.png)
