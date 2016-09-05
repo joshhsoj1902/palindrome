@@ -1,6 +1,6 @@
 {
   "name": "Palindrome Tester",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A palindrome tester api to verify if a string is a palindrome",
   "template": {
     "forceLanguage": "en"
