@@ -33,7 +33,7 @@ http://localhost:3000
 ###Docker
 If you only wish to run this application and have no intention on making source changes, it's much easier to use the [Palindrome docker recipe](https://github.com/joshhsoj1902/Palindrome-docker-recipe).
 ####Prerequisites
-Docker must be installed and MongoDB needs to be running 
+Docker must be installed and MongoDB needs to be running somewhere.
 ####1. Build the image
 ```
 docker build -t joshhsoj1902/palindrome .
@@ -48,3 +48,21 @@ The application will now be running at:
 ```
 http://localhost:3000
 ```
+
+##Application details
+### API documentation
+Details on the API can be found on the live demo [here](http://palindrome.dustless.club/apidoc) or on a local instance of the app at
+```
+localhost:3000/apidoc
+```
+The local copy can be regenerated using 
+```
+npm run apidoc
+```
+###Testing
+The test suite can be ran using the command:
+```
+npm run test
+```
+###Sequence Diagrams
+TBD
