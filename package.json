@@ -1,6 +1,6 @@
 {
   "name": "palindrome",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Josh <the.josh.bryans@gmail.com>",
   "description": "A simple Palindrome checker api with an angular ui",
   "contributors": [
