@@ -18,5 +18,4 @@ RUN npm install --unsafe-perm
 # Bundle app source
 #COPY . /usr/src/app
 
-EXPOSE 80
 CMD [ "node", "app.js" ]
