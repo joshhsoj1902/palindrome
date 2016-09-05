@@ -25,7 +25,8 @@
     "cookie-parser": "^1.4.1",
     "errorhandler": "^1.4.2",
     "express": "~4.7.2",
-    "mongoose": "4.5.10"
+    "mongoose": "4.6.0",
+    "apidoc": "0.16.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -42,6 +43,7 @@
     "postinstall": "bower install --allow-root",
     "pretest": "npm run lint",
     "test": "mocha test",
-    "lint": "jshint ."
+    "lint": "jshint .",
+    "apidoc": "apidoc -e \"(node_modules|public)\" -o public/apidoc"
   }
 }
