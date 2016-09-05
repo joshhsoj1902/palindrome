@@ -10,6 +10,10 @@ var Message = require('../models/message');
 
 chai.use(chaiHttp);
 
+//TODO: Need to set up testing to use another port. currently it uses the 
+//      same port as dev which results in all my data being removed if i leave
+//      the dev server running when running tests.
+
 
 describe('Basic Server Access', function () {
   it('Home page should load: / GET', function (done) {
@@ -36,9 +40,9 @@ describe('Messages API', function () {
       isPalindrome: false
     });
     newMessage.save(function (err) {
-      if (err){
+      if (err) {
         //Todo: Something better could be done here, but future tests will fail anyway...
-        console.log("Saving message failed: ",err);
+        console.log("Saving message failed: ", err);
       }
       done();
     });
@@ -102,13 +106,6 @@ describe('Messages API', function () {
       .end(function (err, res) {
         //expect(err).to.be.a('null');
         res.should.have.property('status', 404);
-        // res.should.be.json;
-        // expect(res.body).to.be.a('array')
-        // res.body[0].should.have.property('_id');
-        // res.body[0].should.have.property('body');
-        // res.body[0].should.have.property('isPalindrome');
-        // res.body[0].body.should.equal('Test Message');
-        // res.body[0].isPalindrome.should.equal(false);
         done();
       });
   });
@@ -137,27 +134,18 @@ describe('Messages API', function () {
       });
   });
 
-    it('should return 400 error when no body is provided on /api/message PUT', function (done) {
+  it('should return 400 error when no body is provided on /api/message PUT', function (done) {
     chai.request(server)
       .put('/api/message')
       .end(function (err, res) {
         //expect(err).to.be.a('null');
         res.should.have.property('status', 400);
         //res.should.be.json;
-
-        // expect(res.body).to.be.a('array');
-        // newMessage = res.body.find(x => x.body === 'Put Message');
-        // expect(newMessage).to.be.a('object');
-        // newMessage.should.have.property('body');
-        // newMessage.should.have.property('_id');
-        // newMessage.should.have.property('isPalindrome');
-        // newMessage.body.should.equal('Put Message');
-        // newMessage.isPalindrome.should.equal(false);
         done();
       });
   });
 
-      it('should return 400 error when an empty body is provided on /api/message PUT', function (done) {
+  it('should return 400 error when an empty body is provided on /api/message PUT', function (done) {
     chai.request(server)
       .put('/api/message')
       .send({ 'body': '' })
@@ -165,15 +153,6 @@ describe('Messages API', function () {
         //expect(err).to.be.a('null');
         res.should.have.property('status', 400);
         //res.should.be.json;
-
-        // expect(res.body).to.be.a('array');
-        // newMessage = res.body.find(x => x.body === 'Put Message');
-        // expect(newMessage).to.be.a('object');
-        // newMessage.should.have.property('body');
-        // newMessage.should.have.property('_id');
-        // newMessage.should.have.property('isPalindrome');
-        // newMessage.body.should.equal('Put Message');
-        // newMessage.isPalindrome.should.equal(false);
         done();
       });
   });
@@ -204,6 +183,33 @@ describe('Messages API', function () {
       });
   });
 
+  // it('should return 400 error when an empty body is provided on /api/message/<ID> PUT', function (done) {
+  //   chai.request(server)
+  //     .get('/api/message')
+  //     .end(function (err, res) {
+  //       chai.request(server)
+  //         .put('/api/message/' + res.body[0]._id)
+  //         .send({ 'body': '' })
+  //         .end(function (error, res) {
+  //           res.should.have.property('status', 400);
+  //           done();
+  //         });
+  //     });
+  // });
+
+  // it('should return 400 error when no body is provided on /api/message/<ID> PUT', function (done) {
+  //   chai.request(server)
+  //     .get('/api/message')
+  //     .end(function (err, res) {
+  //       chai.request(server)
+  //         .put('/api/message/' + res.body[0]._id)
+  //         .end(function (error, res) {
+  //           res.should.have.property('status', 400);
+  //           done();
+  //         });
+  //     });
+  // });
+
   ///////////////////
   //Deleting messages
   ///////////////////
@@ -225,7 +231,7 @@ describe('Messages API', function () {
 
 
             chai.request(server)
-            .get('/api/message/' + res.body[0]._id)
+              .get('/api/message/' + res.body[0]._id)
               .end(function (err2, res2) {
                 expect(err2).to.be.a('null');
                 res2.should.have.property('status', 404);
