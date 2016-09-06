@@ -233,7 +233,8 @@ describe('Messages API', function () {
             chai.request(server)
               .get('/api/message/' + res.body[0]._id)
               .end(function (err2, res2) {
-                expect(err2).to.be.a('null');
+                //console.log('ERROR2: ',err2);
+                //expect(err2).to.be.a('null');
                 res2.should.have.property('status', 404);
               });
 

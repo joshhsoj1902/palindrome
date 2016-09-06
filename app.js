@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 // *** config file *** //
 var config = require('./config');
 
+console.log("Running env: [",app.settings.env,"]");
+
 // *** mongoose *** ///
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURI[app.settings.env], function (err, res) {
@@ -62,7 +64,9 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
   //app.use(function(err, req, res) {
-  res.status(err.status || 500);
+  res.status(err.status || 500).send({
+    message: err.message
+  });
   //TODO: this is very much a hack to make jshint happy, Is there a case in here that I would want to call next()?
   if (true === false) {
     console.log(next);

@@ -42,7 +42,7 @@
   "scripts": {
     "postinstall": "npm run bower",
     "pretest": "npm run lint",
-    "test": "mocha test",
+    "test": "set NODE_ENV=test&& mocha test",
     "bower": "bower install --allow-root",
     "lint": "jshint .",
     "apidoc": "apidoc -e \"(node_modules|public)\" -o public/apidoc"
