@@ -18,7 +18,7 @@ function updateMessageBody(messageId, messageBody, callback) {
                 updated_at: currentDate,
                 isPalindrome:palindrome.isStringPalindrome(messageBody)
             } 
-        }).exec(callback);
+        },{ runValidators: true }).exec(callback);
 }
 
 function createMessage(messageBody,callback){

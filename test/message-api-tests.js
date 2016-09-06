@@ -183,32 +183,32 @@ describe('Messages API', function () {
       });
   });
 
-  // it('should return 400 error when an empty body is provided on /api/message/<ID> PUT', function (done) {
-  //   chai.request(server)
-  //     .get('/api/message')
-  //     .end(function (err, res) {
-  //       chai.request(server)
-  //         .put('/api/message/' + res.body[0]._id)
-  //         .send({ 'body': '' })
-  //         .end(function (error, res) {
-  //           res.should.have.property('status', 400);
-  //           done();
-  //         });
-  //     });
-  // });
+  it('should return 400 error when an empty body is provided on /api/message/<ID> PUT', function (done) {
+    chai.request(server)
+      .get('/api/message')
+      .end(function (err, res) {
+        chai.request(server)
+          .put('/api/message/' + res.body[0]._id)
+          .send({ 'body': '' })
+          .end(function (error, res) {
+            res.should.have.property('status', 400);
+            done();
+          });
+      });
+  });
 
-  // it('should return 400 error when no body is provided on /api/message/<ID> PUT', function (done) {
-  //   chai.request(server)
-  //     .get('/api/message')
-  //     .end(function (err, res) {
-  //       chai.request(server)
-  //         .put('/api/message/' + res.body[0]._id)
-  //         .end(function (error, res) {
-  //           res.should.have.property('status', 400);
-  //           done();
-  //         });
-  //     });
-  // });
+  it('should return 400 error when no body is provided on /api/message/<ID> PUT', function (done) {
+    chai.request(server)
+      .get('/api/message')
+      .end(function (err, res) {
+        chai.request(server)
+          .put('/api/message/' + res.body[0]._id)
+          .end(function (error, res) {
+            res.should.have.property('status', 400);
+            done();
+          });
+      });
+  });
 
   ///////////////////
   //Deleting messages

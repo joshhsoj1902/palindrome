@@ -5,7 +5,7 @@ var messageSchema = new Schema({
     // Mongo has a built in ID, consider hashing it before exposing it:
     //http://stackoverflow.com/questions/16329353/use-the-database-id-as-the-restful-service-id-expose-a-threat
     // id: { type: String, required: true, unique: true },
-  body: { type: String, required: true},
+  body: { type: String, minlength: 1, required: true},
   isPalindrome: { type: Boolean,required:true},
   created_at: Date,
   updated_at: Date
