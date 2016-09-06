@@ -1,39 +1,42 @@
-var Message = require('../../models/message');
-var palindrome = require('../palindrome/index.js');
+var MessageSchema = require('../../models/message');
+var Palindrome = require('../palindrome/index.js');
 
 function getAllMessages(callback) {
-    Message.find({}).exec(callback);
+    MessageSchema.find({}).exec(callback);
 }
 
 function getMessage(messageId, callback) {
-    Message.findById(messageId).exec(callback);
+    MessageSchema.findById(messageId).exec(callback);
 }
 
 function updateMessageBody(messageId, messageBody, callback) {
     var currentDate = new Date();
-    Message.findByIdAndUpdate(messageId, 
-        { $set: 
-            { 
-                body: messageBody,
-                updated_at: currentDate,
-                isPalindrome:palindrome.isStringPalindrome(messageBody)
-            } 
-        },{ runValidators: true }).exec(callback);
+
+    MessageSchema.findById(messageId,
+        function (err, message) {
+            if (!err) {
+                message.body = messageBody;
+                message.updated_at = currentDate;
+                message.isPalindrome = Palindrome.isStringPalindrome(messageBody);
+                message.save(callback);
+            }
+        }
+    );
 }
 
-function createMessage(messageBody,callback){
+function createMessage(messageBody, callback) {
     var currentDate = new Date();
-    var message = new Message({
+    var message = new MessageSchema({
         body: messageBody,
         created_at: currentDate,
         updated_at: currentDate,
-        isPalindrome:palindrome.isStringPalindrome(messageBody)
+        isPalindrome: Palindrome.isStringPalindrome(messageBody)
     });
     message.save(callback);
 }
 
-function deleteMessage(messageId,callback){
-    Message.findByIdAndRemove(messageId).exec(callback);
+function deleteMessage(messageId, callback) {
+    MessageSchema.findByIdAndRemove(messageId).exec(callback);
 }
 
 exports.getAllMessages = getAllMessages;
