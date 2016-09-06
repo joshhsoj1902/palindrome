@@ -59,13 +59,13 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <h2>Add New Message</h2>
                 <!-- FORM TO CREATE NEW Messages -->
-                <div id="feed-form">
+                <div id="message-form">
                     <div>
                         <form>
                             <div class="form-group">
                                 <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
                                 <div class="form-group">
-                                    <label for="feedTitle">Message: </label>
+                                    <label for="messageTitle">Message: </label>
                                     <input type="text" id="messageBody" class="form-control" ng-model="formData.body">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg" ng-click="createMessage()">Add</button>
