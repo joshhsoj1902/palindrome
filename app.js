@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-// *** config file *** //
+// *** config file test *** //
 var config = require('./config');
 
 console.log("Running env: [",app.settings.env,"]");
