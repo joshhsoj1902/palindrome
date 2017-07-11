@@ -20,7 +20,6 @@ jobs:
             sudo curl -sSLf -z $loc -o $loc $DOCKER_COMPOSE_URL
             sudo chmod 755 $loc
       - run:
-          name: "Pre Pull (Web Proxy)"
-          background: true
+          name: "Make Build"
           command: |
             make build
