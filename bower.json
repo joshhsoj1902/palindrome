@@ -19,11 +19,11 @@
   ],
   "directory" : "public/assets",
   "dependencies": {
-    "bootstrap": "~3.3.5",
-    "angular-bootstrap": "*",
-    "angular": "~1.5.8",
-    "angular-route": "~1.5.8",
-    "angular-material": "~0.10.0",
-    "angular-aria": "*"
+    "bootstrap": "^3.3.0",
+    "angular-bootstrap": "^2.5.0",
+    "angular": "^1.6.0",
+    "angular-route": "^1.6.0",
+    "angular-material": "^1.1.0",
+    "angular-aria": "^1.6.0"
   }
 }
