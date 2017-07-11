@@ -15,6 +15,8 @@ COPY . /usr/src/app
 #COPY package.json /usr/src/app/
 RUN npm install
 
+RUN bower install --allow-root
+
 # Bundle app source
 #COPY . /usr/src/app
 
