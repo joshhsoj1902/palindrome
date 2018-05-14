@@ -20,7 +20,7 @@
     "palindrome"
   ],
   "dependencies": {
-    "body-parser": "1.18.2",
+    "body-parser": "1.18.3",
     "bower": "1.8.4",
     "cookie-parser": "1.4.3",
     "errorhandler": "1.5.0",
