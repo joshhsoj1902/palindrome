@@ -1,4 +1,4 @@
-FROM node:6-wheezy@sha256:856079c8623dba2eb0a5fbbebb52a34d4057ad0d8b78c1d93b6377f7a251f6fb
+FROM node:6-wheezy@sha256:dd54abb8d480e683c24cdcdcc324307b178e8134efc7ec125a6a5b2402b44d3d
 
 # Create app directory
 RUN mkdir -p /usr/src/app
