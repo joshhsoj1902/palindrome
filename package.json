@@ -32,7 +32,7 @@
     "chai": "4.1.2",
     "chai-http": "4.0.0",
     "mocha": "latest",
-    "should": "13.2.1",
+    "should": "13.2.3",
     "jshint": "latest"
   },
   "license": "MIT",
