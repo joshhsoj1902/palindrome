@@ -29,7 +29,7 @@
     "apidoc": "0.17.6"
   },
   "devDependencies": {
-    "chai": "4.1.2",
+    "chai": "4.2.0",
     "chai-http": "4.2.0",
     "mocha": "latest",
     "should": "13.2.3",
